@@ -1,0 +1,196 @@
+#! C:/Program Files/Nuke6.3v8/Nuke6.3.exe -nx
+version 6.3 v8
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="1911" y="-9" w="1938" h="1050" screen="1">
+        <splitter orientation="1">
+            <split size="1214"/>
+            <splitter orientation="1">
+                <split size="52"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1158"/>
+                <splitter orientation="2">
+                    <split size="488"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="488"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/tp/talk/game/assets/real/boss/bigship.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ file C:/scenes/mygame/bigship.mb.YunRay/Render/2014_09_11__19_32_22__F0001.exr
+ format "900 600 0 0 900 600 1 "
+ origset true
+ name Read1
+ xpos -302
+ ypos -252
+}
+Read {
+ inputs 0
+ file C:/scenes/mygame/bigship.mb.YunRay/Render/2014_09_11__19_33_38__F0001.exr
+ format "900 600 0 0 900 600 1 "
+ origset true
+ name Read2
+ xpos 19
+ ypos -189
+}
+Write {
+ channels rgba
+ file c:/tp/talk/game/assets/boss.png
+ file_type png
+ checkHashOnRead false
+ version 2
+ name Write2
+ xpos -66
+ ypos -42
+}
+Read {
+ inputs 0
+ file C:/scenes/mygame/bigship.mb.YunRay/Render/2014_09_12__23_00_52__F0001.exr
+ format "900 600 0 0 900 600 1 "
+ origset true
+ name Read3
+ xpos -122
+ ypos -223
+}
+add_layer {Mask1 Mask1.red Mask1.green Mask1.blue}
+Shuffle {
+ in Mask1
+ name Shuffle1
+ xpos -204
+ ypos -117
+}
+Write {
+ file c:/tp/talk/game/assets/real/boss/boss_mask.png
+ colorspace linear
+ file_type png
+ checkHashOnRead false
+ version 5
+ name Write1
+ xpos -255
+ ypos -58
+}
+Read {
+ inputs 0
+ file C:/scenes/mygame/bigship.mb.YunRay/Render/2014_09_12__19_53_34__F0001.exr
+ format "900 600 0 0 900 600 1 "
+ origset true
+ name Read4
+ xpos 234
+ ypos -236
+}
+add_layer {Mask2 Mask2.red Mask2.green Mask2.blue}
+Shuffle {
+ in Mask2
+ name Shuffle2
+ xpos 189
+ ypos -76
+}
+set Nacc5760 [stack 0]
+Glint {
+ rotation 30
+ tolerance 0
+ name Glint2
+ xpos 52
+ ypos -18
+}
+push $Nacc5760
+Glint {
+ rotation 120
+ tolerance 0
+ name Glint1
+ xpos 155
+ ypos -11
+}
+Merge2 {
+ inputs 2
+ name Merge2
+ xpos 74
+ ypos 61
+}
+ColorCorrect {
+ gain 0.8
+ name ColorCorrect1
+ xpos 159
+ ypos 95
+}
+set Nacc60c0 [stack 0]
+push $Nacc5760
+push $Nacc5760
+Blur {
+ size 8
+ name Blur1
+ xpos 238
+ ypos 15
+}
+Expression {
+ expr0 r*4
+ expr1 g*4
+ expr2 b
+ name Expression1
+ xpos 264
+ ypos 61
+}
+set Nacc63e0 [stack 0]
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge1
+ xpos 415
+ ypos 61
+}
+push $Nacc60c0
+push $Nacc63e0
+Merge2 {
+ inputs 2
+ name Merge3
+ xpos 241
+ ypos 139
+}
+Clamp {
+ name Clamp1
+ xpos 382
+ ypos 133
+}
+Write {
+ file c:/tp/talk/game/assets/real/boss/boss_mask_laser2.png
+ colorspace linear
+ file_type png
+ checkHashOnRead false
+ version 12
+ name Write3
+ selected true
+ xpos 248
+ ypos 176
+}
+Viewer {
+ inputs 3
+ frame 1
+ input_process false
+ name Viewer1
+ xpos -13
+ ypos 134
+}

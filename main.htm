@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<title>WebGL Game</title>
+<!--shim, slightly modified from js1k-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<style>
+html, body { margin: 0; padding: 0; border: 0; }
+#g_canvas { display: block; } /* kill scrollbars from hell */
+</style>
+</head>
+<body>
+<canvas id="g_canvas"></canvas>
+<script>
+  var a = document.getElementsByTagName('canvas')[0];
+  var b = document.body;
+  // unprefix some popular vendor prefixed things (but stick to their original name)
+  var AudioContext =
+    window.AudioContext ||
+    window.webkitAudioContext;
+  var requestAnimationFrame =
+    window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function(f){ setTimeout(f, 1000/30); };
+  //var requestAnimationFrame=function(f){ setTimeout(f, 1000/30);};
+
+  // fix bug in safari: http://qfox.nl/weblog/218
+  document.body.clientWidth;
+  c={"width":768/g_canvas.height*g_canvas.width,"height":768,"is_level_editor":0};
+  if(document.location.hash=="#editor"){
+  	c.is_level_editor=1;
+  	document.title="Level editor";
+  }
+
+  window.onresize=function(){
+	  //a.style.width = (a.width = innerWidth-1) + 'px';
+	  a.style.height = (a.height = innerHeight) + 'px';
+      a.style.width = (a.width = a.height/768*1024) + 'px';
+      c.width=768/g_canvas.height*g_canvas.width;
+      gl.viewport(0, 0, g_canvas.width, g_canvas.height);
+  }
+
+  var gl = (function () {
+    try {
+      var o = { antialias: true, stencil: true };
+      var gl = g_canvas.getContext('webgl', o) || g_canvas.getContext('experimental-webgl', o);
+      gl.viewport(0, 0, g_canvas.width, g_canvas.height);
+
+      // keep in scope, must not be garbage collected
+      /*
+      __glExts =
+        [ 'OES_texture_float', 'OES_texture_float_linear', 'OES_standard_derivatives',
+          'EXT_texture_filter_anisotropic', 'MOZ_EXT_texture_filter_anisotropic', 'WEBKIT_EXT_texture_filter_anisotropic',
+          'WEBGL_compressed_texture_s3tc', 'MOZ_WEBGL_compressed_texture_s3tc', 'WEBKIT_WEBGL_compressed_texture_s3tc'
+        ].map(function (ext) {
+          return gl.getExtension(ext);
+        });*/
+
+    } catch (e) {
+      document.body.innerHTML = 'WebGL not supported.';
+      throw e;
+    }
+
+    return gl;
+  })();
+  window.onresize();
+
+  (function(){
+  	for(x in gl){
+  		if(x[0]>='a'&&x[0]<='z'){
+  			try{
+  				window["gl"+x[0].toUpperCase()+x.substr(1)]=gl[x].bind(gl);
+  			}catch(err){
+  			    console.log(x);
+  			}
+  		}else{
+  			window["GL_"+x]=gl[x];
+  		}
+  	}
+  }());
+  
+  var g_texture_packing=0;
+</script><script src="code/main.js"></script>
+</body>
+</html>

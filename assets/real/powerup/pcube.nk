@@ -1,0 +1,119 @@
+#! C:/Program Files/Nuke6.3v8/Nuke6.3.exe -nx
+version 6.3 v8
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="1911" y="-9" w="1938" h="1050" screen="1">
+        <splitter orientation="1">
+            <split size="1214"/>
+            <splitter orientation="1">
+                <split size="52"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1158"/>
+                <splitter orientation="2">
+                    <split size="488"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="488"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/tp/talk/game/assets/real/powerup/pcube.nk
+ frame 12
+ last_frame 60
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ file C:/tp/talk/game/assets/real/powerup/pcube####.exr
+ format "128 128 0 0 128 128 1 "
+ last 60
+ origlast 60
+ origset true
+ name Read1
+ xpos -35
+ ypos -167
+}
+set N83fcd50 [stack 0]
+push $N83fcd50
+Gamma {
+ value 0.7
+ name Gamma1
+ xpos 43
+ ypos -59
+}
+Blur {
+ size 8
+ name Blur1
+ xpos 50
+ ypos -14
+}
+Expression {
+ expr0 r*2.5
+ expr1 g*2
+ expr2 b*1.2
+ name Expression1
+ xpos 29
+ ypos 33
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+ name Merge1
+ xpos 13
+ ypos 61
+}
+Transform {
+ scale 0.36
+ name Transform1
+ xpos 80
+ ypos 100
+}
+Crop {
+ box {0 0 47 47}
+ reformat true
+ crop false
+ name Crop1
+ xpos 97
+ ypos 128
+}
+Write {
+ channels rgba
+ file C:/tp/talk/game/assets/real/powerup/pcube####.png
+ file_type png
+ checkHashOnRead false
+ version 2
+ name Write1
+ selected true
+ xpos -15
+ ypos 146
+}
+push $N83fcd50
+Viewer {
+ inputs 2
+ frame 12
+ input_process false
+ name Viewer1
+ xpos -139
+ ypos 157
+}

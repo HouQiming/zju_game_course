@@ -1,0 +1,82 @@
+#! C:/Program Files/Nuke6.3v8/Nuke6.3.exe -nx
+version 6.3 v8
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="1911" y="-9" w="1938" h="1050" screen="1">
+        <splitter orientation="1">
+            <split size="1214"/>
+            <splitter orientation="1">
+                <split size="52"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1158"/>
+                <splitter orientation="2">
+                    <split size="488"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="488"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name c:/tp/talk/game/assets/real/bullet/emissile.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ file C:/scenes/mygame/emissile.mb.YunRay/Render/2014_09_13__13_09_06__F0001.exr
+ format "512 512 0 0 512 512 1 square_512"
+ origset true
+ name Read1
+ xpos 111
+ ypos -193
+}
+Transform {
+ scale 0.25
+ name Transform1
+ xpos 33
+ ypos -78
+}
+Crop {
+ box {1 1 128 128}
+ softness -0.4
+ reformat true
+ crop false
+ name Crop1
+ xpos 10
+ ypos -47
+}
+Write {
+ channels rgba
+ file c:/tp/talk/game/assets/real/bullet/emissile.png
+ file_type png
+ checkHashOnRead false
+ version 1
+ name Write1
+ xpos 4
+ ypos 20
+}
+Viewer {
+ frame 1
+ input_process false
+ name Viewer1
+ xpos -4
+ ypos 94
+}
